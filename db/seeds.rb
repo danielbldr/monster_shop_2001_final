@@ -78,3 +78,8 @@ order_1.item_orders.create(item: tire, price: tire.price, quantity: 2)
 order_1.item_orders.create(item: pull_toy, price: pull_toy.price, quantity: 3)
 order_2.item_orders.create(item: pull_toy, price: pull_toy.price, quantity: 3)
 order_3.item_orders.create(item: dog_bone, price: dog_bone.price, quantity: 1)
+
+#merchant_discounts
+BulkDiscount.create(minimum_items: 5, percentage_off: 5, description: "5% off 5 items or more", merchant_id: bike_shop.id)
+BulkDiscount.create(minimum_items: 10, percentage_off: 10, description: "10% off 10 items or more", merchant_id: bike_shop.id)
+BulkDiscount.create(minimum_items: 10, percentage_off: 10, description: "10% off 10 items or more", merchant_id: dog_shop.id)
