@@ -41,6 +41,8 @@ Rails.application.routes.draw do
     get "/profile/orders", to: "users#orders"
   end
 
+  resources :bulk_discounts
+
   resource :password, only: [:edit, :update]
 
   namespace :merchant do
