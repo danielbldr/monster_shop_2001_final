@@ -1,0 +1,14 @@
+<center>
+  <%= form_for @bulk_discount, :url => path, method: method do |f|%>
+    <%= f.label :description %>
+    <%= f.text_field :description, id:"description"%>
+
+    <%= f.label :minimum_items %>
+    <%= f.text_field :minimum_items, id:"minimum_items" %>
+
+    <%= f.label :percentage_off %>
+    <%= f.text_field :percentage_off, id:"percentage_off" %>
+
+    <%= submit_tag button_name %>
+  <% end %>
+</center>
