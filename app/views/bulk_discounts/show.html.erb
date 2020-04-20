@@ -4,4 +4,5 @@
 <p>Minimum Items: <%= @bulk_discount.minimum_items %></p>
 <p>Percentage Off: <%= @bulk_discount.percentage_off %>%</p>
 
-<%= button_to "Edit This Discount", edit_bulk_discount_path(@bulk_discount), method: :get %>
+<%= link_to "Edit This Discount", edit_bulk_discount_path(@bulk_discount), method: :get, :class => "warning" %>
+<%= link_to "Delete This Discount", bulk_discount_path(@bulk_discount), method: :delete, :class => "danger" %>

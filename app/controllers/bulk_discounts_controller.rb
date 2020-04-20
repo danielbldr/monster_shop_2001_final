@@ -40,6 +40,11 @@ class BulkDiscountsController < ApplicationController
     end
   end
 
+  def destroy
+    BulkDiscount.destroy(params[:id])
+    redirect_to bulk_discounts_path
+  end
+
   private
   def discount_params
     params.require(:bulk_discount).permit(:description, :minimum_items, :percentage_off, :id)
