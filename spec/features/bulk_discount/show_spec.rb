@@ -4,7 +4,6 @@ RSpec.describe 'As a merchant employee', type: :feature do
   it 'I can view my bulk discounts' do
     bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     bulk_discount1 = BulkDiscount.create(minimum_items: 5, percentage_off: 5, description: "5% off 5 items or more", merchant_id: bike_shop.id)
-    bulk_discount2 = BulkDiscount.create(minimum_items: 10, percentage_off: 10, description: "10% off 10 items or more", merchant_id: bike_shop.id)
     User.create({name: "Regina",
                  street_address: "6667 Evil Ln",
                  city: "Storybrooke",
@@ -25,20 +24,13 @@ RSpec.describe 'As a merchant employee', type: :feature do
     click_button 'Log in'
 
     click_link "View Bulk Discounts"
-    expect(current_path).to eq("/bulk_discounts")
-
-    expect(page).to have_content("#{bike_shop.name}'s Bulk Discounts")
-
     within("#discount-#{bulk_discount1.id}") do
-      expect(page).to have_content(bulk_discount1.minimum_items)
-      expect(page).to have_content(bulk_discount1.percentage_off)
-      expect(page).to have_content(bulk_discount1.description)
+      click_link bulk_discount1.description
     end
 
-    within("#discount-#{bulk_discount2.id}") do
-      expect(page).to have_content(bulk_discount2.minimum_items)
-      expect(page).to have_content(bulk_discount2.percentage_off)
-      expect(page).to have_content(bulk_discount2.description)
-    end
+    expect(current_path).to eq("/bulk_discounts/#{bulk_discount1.id}")
+    expect(page).to have_content(bulk_discount1.minimum_items)
+    expect(page).to have_content(bulk_discount1.percentage_off)
+    expect(page).to have_content(bulk_discount1.description)
   end
 end

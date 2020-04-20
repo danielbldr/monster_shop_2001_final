@@ -8,7 +8,7 @@
   </tr>
   <% @bulk_discounts.each do |bulk_discount| %>
   <tr id="discount-<%= bulk_discount.id %>">
-    <th><%= bulk_discount.description %></th>
+    <th><%= link_to bulk_discount.description, bulk_discount_path(bulk_discount) %></th>
     <th><%= bulk_discount.minimum_items %></th>
     <th><%= bulk_discount.percentage_off %>%</th>
   </tr>

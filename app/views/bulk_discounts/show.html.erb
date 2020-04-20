@@ -1,0 +1,7 @@
+<h1><%= @bulk_discount.description %></h1>
+
+<h3>Details</h3>
+<p>Minimum Items: <%= @bulk_discount.minimum_items %></p>
+<p>Percentage Off: <%= @bulk_discount.percentage_off %></p>
+
+<%= button_to "Edit This Button", edit_bulk_discount_path(@bulk_discount) %>
