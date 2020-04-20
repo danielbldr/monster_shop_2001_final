@@ -23,7 +23,12 @@ class Cart
   end
 
   def subtotal(item)
-    item.price * @contents[item.id.to_s]
+    item_quantity = @contents[item.id.to_s]
+    if !item_quantity.nil? && item.best_discount(item_quantity)
+      (item.price * @contents[item.id.to_s]) * ((100.00 - item.best_discount(item_quantity)[:percentage_off])/100)
+    else
+      item.price * @contents[item.id.to_s]
+    end
   end
 
   def total
