@@ -1,0 +1,6 @@
+<h1>Create New Discount</h1>
+
+<%= render partial: "shared/bulk_discount_form", locals: { path: bulk_discounts_path,
+                                      method: :post,
+                                      button_name: "Submit",
+                                      item: @bulk_discount } %>
