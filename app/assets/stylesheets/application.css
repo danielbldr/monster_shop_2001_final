@@ -193,3 +193,9 @@ tr:nth-child(even) {
   background: #f44336;
   color: white;
 }
+
+.success {
+  border-style: solid;
+  background-color: #4CAF50;
+  color: white;
+}
