@@ -39,6 +39,9 @@
         </td>
       <td>
         <p><%=number_to_currency(cart.subtotal(item))%></p>
+        <% if !item.best_discount(quantity).nil?%>
+        <p>Discount Applied: <%= item.best_discount(quantity).description %></p>
+        <% end %>
     </td>
     </tr>
   <% end %>
