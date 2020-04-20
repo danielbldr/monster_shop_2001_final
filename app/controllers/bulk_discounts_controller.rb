@@ -4,6 +4,22 @@ class BulkDiscountsController < ApplicationController
     @bulk_discounts = BulkDiscount.where("merchant_id = ?", current_user.merchant_id)
   end
 
+  def new
+    @bulk_discount = BulkDiscount.new
+  end
+
+  def create
+    merchant = Merchant.find(current_user.merchant_id)
+    @bulk_discount = merchant.bulk_discounts.new(discount_params)
+    if @bulk_discount.save
+      flash[:success] = "You successfully added the #{@bulk_discount.description} discount"
+      redirect_to bulk_discounts_path
+    else
+      flash[:error] = @bulk_discount.errors.full_messages.to_sentence
+      redirect_to new_bulk_discount_path
+    end
+  end
+
   def show
     @bulk_discount = BulkDiscount.find(params[:id])
   end
