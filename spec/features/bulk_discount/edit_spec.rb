@@ -30,7 +30,7 @@ RSpec.describe 'As a merchant employee', type: :feature do
       click_link @bulk_discount1.description
     end
 
-    click_button "Edit This Discount"
+    click_link "Edit This Discount"
     expect(current_path).to eq("/bulk_discounts/#{@bulk_discount1.id}/edit")
 
     fill_in :description, with: "10% off 10 items or more"
@@ -57,7 +57,7 @@ RSpec.describe 'As a merchant employee', type: :feature do
       click_link @bulk_discount1.description
     end
 
-    click_button "Edit This Discount"
+    click_link "Edit This Discount"
 
     fill_in :description, with: ""
     fill_in :percentage_off, with: "This"
