@@ -20,4 +20,14 @@
 <% if !current_admin? %>
   <%= link_to "View My Items", "/merchant/#{@merchant.id}/items"%>
   <%= link_to "View Bulk Discounts", bulk_discounts_path %>
+
+  <section class="to-do-list">
+    <h3>To Do List</h3>
+    <p>Items Needing a Photo</p>
+    <ul>
+      <% @merchant.items_with_default_photo.each do |item| %>
+      <li> <%= link_to item.name, "/merchant/items/#{item.id}/edit"  %> </li>
+      <% end %>
+    </ul>
+  </section>
 <% end %>
