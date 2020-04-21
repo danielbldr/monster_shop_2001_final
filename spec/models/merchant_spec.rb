@@ -103,5 +103,12 @@ describe Merchant, type: :model do
 
       expect(@meg.pending_orders).to eq([order_1, order_3])
     end
+
+    it 'items_with_default_photo' do
+      pull_toy = @meg.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, inventory: 32)
+      dog_bone = @meg.items.create(name: "Dog Bone", description: "They'll love it!", price: 20, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", inventory: 21)
+
+      expect(@meg.items_with_default_photo).to eq([pull_toy])
+    end
   end
 end
