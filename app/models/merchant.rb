@@ -53,13 +53,17 @@ class Merchant <ApplicationRecord
   end
 
   def unfulfilled_orders_stat
-    number_of_pending_orders = pending_orders.count
-    value_of_pending_orders = pending_orders.sum do |order|
-                                order.item_orders.sum do |item_order|
-                                  item_order.quantity * item_order.price
+    if pending_orders == []
+      "You have no pending orders"
+    else
+      number_of_pending_orders = pending_orders.count
+      value_of_pending_orders = pending_orders.sum do |order|
+                                  order.item_orders.sum do |item_order|
+                                    item_order.quantity * item_order.price
+                                  end
                                 end
-                              end
-    "You have #{pluralize(number_of_pending_orders, "unfulfilled order")} worth #{number_to_currency(value_of_pending_orders)}"
+      "You have #{pluralize(number_of_pending_orders, "unfulfilled order")} worth #{number_to_currency(value_of_pending_orders)}"
+    end
   end
 
 end

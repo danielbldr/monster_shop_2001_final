@@ -29,5 +29,6 @@
       <li> <%= link_to item.name, "/merchant/items/#{item.id}/edit"  %> </li>
       <% end %>
     </ul>
+    <p><%= @merchant.unfulfilled_orders_stat %></p>
   </section>
 <% end %>

@@ -19,6 +19,24 @@ RSpec.describe "As a merchant employee I see a to do list" do
                          merchant_id: @meg.id
                         })
 
+    @user = User.create({name: "Bob",
+                         street_address: "123 Bob St",
+                         city: "Bobville",
+                         state: "CO",
+                         zip_code: "80302",
+                         email_address: "bob@example.com",
+                         password: "mynamesbob",
+                         password_confirmation: "mynamesbob",
+                         role: 0
+                        })
+
+    @order_1 = Order.create({name: "Bob", address: "22 dog st", city: "Fort Collins",
+                             state: "CO", zip: "80375", status: "Fullfilled", user_id: @user.id})
+    @item_order_1 =  @order_1.item_orders.create!({ item: @dog_bone, quantity: 3, price: @dog_bone.price })
+    @order_2 = Order.create({name: "Bob", address: "22 dog st", city: "Fort Collins",
+                             state: "CO", zip: "80375", status: "Pending", user_id: @user.id})
+    @item_order_2 =  @order_2.item_orders.create!({ item: @pull_toy, quantity: 3, price: @pull_toy.price })
+
     visit '/'
 
     click_on 'Log in'
@@ -26,6 +44,7 @@ RSpec.describe "As a merchant employee I see a to do list" do
     fill_in :password, with: 'henry2004'
     click_button 'Log in'
   end
+
   it "will tell me which items do not have a picutre of their own" do
     within(".to-do-list") do
       expect(page).to have_content("Items Needing a Photo")
@@ -44,6 +63,22 @@ RSpec.describe "As a merchant employee I see a to do list" do
       expect(page).to have_content("Items Needing a Photo")
       expect(page).to_not have_link(@pull_toy.name)
       expect(page).to_not have_link(@dog_bone.name)
+    end
+  end
+
+  it "should return a statistic about unfulfilled orders" do
+    within(".to-do-list") do
+      expect(page).to have_content("You have 1 unfulfilled order worth $30.00")
+    end
+
+    click_link "Order ##{@order_2.id}"
+    click_on("Fulfill")
+    @pull_toy.reload
+
+    visit '/merchant'
+    within(".to-do-list") do
+      expect(page).to_not have_content("You have 1 unfulfilled order worth $30.00")
+      expect(page).to have_content("You have no pending orders")
     end
   end
 end
