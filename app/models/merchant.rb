@@ -45,4 +45,8 @@ class Merchant <ApplicationRecord
     end
   end
 
+  def items_with_default_photo
+    items.where(image: "https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg")
+  end
+
 end
