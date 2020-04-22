@@ -33,4 +33,8 @@ class Item <ApplicationRecord
     least_popular_item_orders = ItemOrder.find_by_sql("SELECT items.id, sum(CASE WHEN item_orders.quantity IS NULL THEN 0 ELSE item_orders.quantity END) as total_quantity FROM items FULL OUTER JOIN item_orders ON items.id = item_orders.item_id GROUP BY items.id ORDER BY total_quantity ASC LIMIT 5;")
     least_popular_item_orders.map {|item| Item.find(item.id).name }
   end
+
+  def best_discount(item_quantity)
+    BulkDiscount.order(percentage_off: :desc).find_by("merchant_id = ? AND minimum_items <= ?", self.merchant_id, item_quantity)
+  end
 end

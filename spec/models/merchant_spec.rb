@@ -12,6 +12,7 @@ describe Merchant, type: :model do
   describe "relationships" do
     it {should have_many :items}
     it {should have_many :users}
+    it {should have_many :bulk_discounts}
   end
 
   describe 'instance methods' do
@@ -101,6 +102,27 @@ describe Merchant, type: :model do
       order_3.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
 
       expect(@meg.pending_orders).to eq([order_1, order_3])
+    end
+
+    it 'items_with_default_photo' do
+      pull_toy = @meg.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, inventory: 32)
+      dog_bone = @meg.items.create(name: "Dog Bone", description: "They'll love it!", price: 20, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", inventory: 21)
+
+      expect(@meg.items_with_default_photo).to eq([pull_toy])
+    end
+
+    it "unfulfilled_orders_stat" do
+      user = User.create!({name: "Bob", street_address: "22 dog st", city: "Fort Collins",
+                           state: "CO", zip_code: "80375", email_address: "bob@example.com",
+                           password: "password1", password_confirmation: "password1", role: 0
+                          })
+      chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22)
+      order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: user.id, status: "Pending")
+      order_2 = Order.create!(name: 'Brian', address: '123 Brian Ave', city: 'Denver', state: 'CO', zip: 17033, user_id: user.id, status:"Packaged")
+      order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      order_2.item_orders.create!(item: chain, price: chain.price, quantity: 2)
+
+      expect(@meg.unfulfilled_orders_stat).to eq("You have 1 unfulfilled order worth $200.00")
     end
   end
 end

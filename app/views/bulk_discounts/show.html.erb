@@ -1,0 +1,8 @@
+<h1><%= @bulk_discount.description %></h1>
+
+<h3>Details</h3>
+<p>Minimum Items: <%= @bulk_discount.minimum_items %></p>
+<p>Percentage Off: <%= @bulk_discount.percentage_off %>%</p>
+
+<%= link_to "Edit This Discount", edit_bulk_discount_path(@bulk_discount), method: :get, :class => "warning" %>
+<%= link_to "Delete This Discount", bulk_discount_path(@bulk_discount), method: :delete, :class => "danger" %>

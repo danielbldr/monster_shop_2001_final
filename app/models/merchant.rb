@@ -1,7 +1,11 @@
 class Merchant <ApplicationRecord
+  include ActionView::Helpers::NumberHelper
+  include ActionView::Helpers::TextHelper
+
   has_many :items, dependent: :destroy
   has_many :item_orders, through: :items
   has_many :users
+  has_many :bulk_discounts
 
   validates_presence_of :name,
                         :address,
@@ -41,6 +45,24 @@ class Merchant <ApplicationRecord
   def activate_items
     if active?
       items.each { |item| item.update(active?: true) }
+    end
+  end
+
+  def items_with_default_photo
+    items.where(image: "https://www.intemposoftware.com/uploads/blog/Blog_inventory_control.jpg")
+  end
+
+  def unfulfilled_orders_stat
+    if pending_orders == []
+      "You have no pending orders"
+    else
+      number_of_pending_orders = pending_orders.count
+      value_of_pending_orders = pending_orders.sum do |order|
+                                  order.item_orders.sum do |item_order|
+                                    item_order.quantity * item_order.price
+                                  end
+                                end
+      "You have #{pluralize(number_of_pending_orders, "unfulfilled order")} worth #{number_to_currency(value_of_pending_orders)}"
     end
   end
 
