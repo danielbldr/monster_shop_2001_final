@@ -59,7 +59,7 @@ class Merchant <ApplicationRecord
       number_of_pending_orders = pending_orders.count
       value_of_pending_orders = pending_orders.sum do |order|
                                   order.item_orders.sum do |item_order|
-                                    item_order.quantity * item_order.price
+                                    item_order.item.merchant_id == self.id ? (item_order.quantity * item_order.price) : 0
                                   end
                                 end
       "You have #{pluralize(number_of_pending_orders, "unfulfilled order")} worth #{number_to_currency(value_of_pending_orders)}"

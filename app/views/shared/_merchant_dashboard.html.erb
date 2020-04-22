@@ -22,13 +22,16 @@
   <%= link_to "View Bulk Discounts", bulk_discounts_path %>
 
   <section class="to-do-list">
-    <h3>To Do List</h3>
-    <p>Items Needing a Photo</p>
-    <ul>
+    <h2>To Do List</h2>
+    <h4>Items Needing a Photo: </h4>
+      <% if @merchant.items_with_default_photo == [] %>
+      <p> None </p>
+      <% else %>
       <% @merchant.items_with_default_photo.each do |item| %>
-      <li> <%= link_to item.name, "/merchant/items/#{item.id}/edit"  %> </li>
+      <p> <%= link_to item.name, "/merchant/items/#{item.id}/edit"  %> </p>
       <% end %>
-    </ul>
+      <% end %>
+      <br>
     <p><%= @merchant.unfulfilled_orders_stat %></p>
   </section>
 <% end %>
